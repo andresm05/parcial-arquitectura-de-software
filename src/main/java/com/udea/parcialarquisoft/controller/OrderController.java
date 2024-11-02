@@ -33,7 +33,7 @@ public class OrderController {
 
     //save a new order
     @Operation(summary = "Save a new order")
-    @PostMapping(produces = "application/com.udea.parcialarquisoft-v1+json")
+    @PostMapping
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Order created", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))
@@ -51,7 +51,7 @@ public class OrderController {
             }),
             @ApiResponse(responseCode = "404", description = "Order not found", content = @Content)
     })
-    @GetMapping(value = "/{id}", produces = "application/com.udea.parcialarquisoft-v1+json")
+    @GetMapping("/{id}")
     public ResponseEntity<Order> findById(@PathVariable Long id) {
         return new ResponseEntity<>(orderService.findOrderById(id), HttpStatus.OK);
     }
@@ -63,7 +63,7 @@ public class OrderController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))
             }),
     })
-    @GetMapping(produces = "application/com.udea.parcialarquisoft-v1+json")
+    @GetMapping
     public ResponseEntity<List<Order>> findAll() {
         return new ResponseEntity<>(orderService.findAllOrders(), HttpStatus.OK);
     }

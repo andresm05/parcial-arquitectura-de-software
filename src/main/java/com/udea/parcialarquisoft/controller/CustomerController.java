@@ -31,7 +31,7 @@ public class CustomerController {
 
     // Save a new customer
     @Operation(summary = "Save a new customer")
-    @PostMapping(produces = "application/com.udea.parcialarquisoft-v1+json")
+    @PostMapping
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Customer created", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Customer.class))
@@ -49,7 +49,7 @@ public class CustomerController {
             }),
             @ApiResponse(responseCode = "404", description = "Customers not found", content = @Content)
     })
-    @GetMapping(produces = "application/com.udea.parcialarquisoft-v1+json")
+    @GetMapping
     public ResponseEntity<List<Customer>> findAllCustomers() {
         return new ResponseEntity<>(customerService.findAllCustomers(), HttpStatus.OK);
     }
