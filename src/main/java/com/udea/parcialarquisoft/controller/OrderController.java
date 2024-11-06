@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.udea.parcialarquisoft.exceptions.RestException;
 import com.udea.parcialarquisoft.model.order.Order;
 import com.udea.parcialarquisoft.model.order.OrderRequest;
 import com.udea.parcialarquisoft.service.OrderService;
@@ -39,7 +40,7 @@ public class OrderController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))
             }),
     })
-    public ResponseEntity<Order> save(@RequestBody OrderRequest order) {
+    public ResponseEntity<Order> save(@RequestBody OrderRequest order) throws RestException {
         return new ResponseEntity<>(orderService.saveOrder(order), HttpStatus.CREATED);
     }
 

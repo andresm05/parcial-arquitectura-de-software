@@ -1,8 +1,11 @@
 package com.udea.parcialarquisoft.service;
 
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.udea.parcialarquisoft.exceptions.ObjectNotFoundException;
+import com.udea.parcialarquisoft.exceptions.RestException;
 import com.udea.parcialarquisoft.model.Customer;
 import com.udea.parcialarquisoft.model.order.Order;
 import com.udea.parcialarquisoft.model.order.OrderRequest;
@@ -22,12 +25,12 @@ public class OrderService {
     private final CustomerRespository customerRepository;
 
     // Save a new order
-    public Order saveOrder(OrderRequest orderRequest) {
+    public Order saveOrder(OrderRequest orderRequest) throws  RestException{
         Order order = OrderRequestMapper.builder().withOrderRequest(orderRequest).mapToModel();
 
         // Find the customer by id
         Customer customer = customerRepository.findById(orderRequest.getCustomerId())
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+                .orElseThrow(() -> new ObjectNotFoundException("Customer with id: " + orderRequest.getCustomerId() + " not found"));
         order.setCustomer(customer);
         return orderRepository.save(order);
     }

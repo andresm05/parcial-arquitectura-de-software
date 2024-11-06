@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.udea.parcialarquisoft.exceptions.RestException;
 import com.udea.parcialarquisoft.model.Customer;
 import com.udea.parcialarquisoft.service.CustomerService;
 
@@ -33,21 +34,20 @@ public class CustomerController {
     @Operation(summary = "Save a new customer")
     @PostMapping
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Customer created", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Customer.class))
-            }),
-    })
-    public ResponseEntity<Customer> saveCustomer(@RequestBody Customer customer) {
+        @ApiResponse(responseCode = "201", description = "Customer created", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = Customer.class))
+        }),})
+    public ResponseEntity<Customer> saveCustomer(@RequestBody Customer customer) throws RestException {
         return new ResponseEntity<>(customerService.saveCustomer(customer), HttpStatus.CREATED);
     }
 
     // Find all customers
     @Operation(summary = "Find all customers")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Customers found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Customer.class))
-            }),
-            @ApiResponse(responseCode = "404", description = "Customers not found", content = @Content)
+        @ApiResponse(responseCode = "200", description = "Customers found", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = Customer.class))
+        }),
+        @ApiResponse(responseCode = "404", description = "Customers not found", content = @Content)
     })
     @GetMapping
     public ResponseEntity<List<Customer>> findAllCustomers() {

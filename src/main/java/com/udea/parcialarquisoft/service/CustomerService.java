@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.udea.parcialarquisoft.exceptions.ObjectAlreadyExistException;
+import com.udea.parcialarquisoft.exceptions.RestException;
 import com.udea.parcialarquisoft.model.Customer;
 import com.udea.parcialarquisoft.repository.CustomerRespository;
 
@@ -18,9 +20,9 @@ public class CustomerService {
     private final CustomerRespository customerRepository;
 
     // Save a new customer
-    public Customer saveCustomer( Customer customer){
+    public Customer saveCustomer( Customer customer) throws RestException{
         if(customerRepository.findByEmail(customer.getEmail()) != null){
-            throw new RuntimeException("Customer already exists with email: " + customer.getEmail() + " ");
+            throw new ObjectAlreadyExistException("Customer with email: " + customer.getEmail() + " already exist");
         }
         return customerRepository.save(customer);
     }
