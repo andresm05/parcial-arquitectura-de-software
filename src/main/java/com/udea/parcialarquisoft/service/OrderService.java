@@ -36,8 +36,8 @@ public class OrderService {
     }
 
     // Find an order by id
-    public Order findOrderById(Long id) {
-        return orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
+    public Order findOrderById(Long id)  throws RestException{
+        return orderRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Order with id: " + id + " not found"));
     }
 
     // Find all orders

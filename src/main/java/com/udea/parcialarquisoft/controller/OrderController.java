@@ -36,10 +36,9 @@ public class OrderController {
     @Operation(summary = "Save a new order")
     @PostMapping
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Order created", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))
-            }),
-    })
+        @ApiResponse(responseCode = "201", description = "Order created", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))
+        }),})
     public ResponseEntity<Order> save(@RequestBody OrderRequest order) throws RestException {
         return new ResponseEntity<>(orderService.saveOrder(order), HttpStatus.CREATED);
     }
@@ -47,27 +46,25 @@ public class OrderController {
     //find order by id
     @Operation(summary = "Find order by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Order found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))
-            }),
-            @ApiResponse(responseCode = "404", description = "Order not found", content = @Content)
+        @ApiResponse(responseCode = "200", description = "Order found", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))
+        }),
+        @ApiResponse(responseCode = "404", description = "Order not found", content = @Content)
     })
     @GetMapping("/{id}")
-    public ResponseEntity<Order> findById(@PathVariable Long id) {
+    public ResponseEntity<Order> findById(@PathVariable Long id) throws RestException {
         return new ResponseEntity<>(orderService.findOrderById(id), HttpStatus.OK);
     }
 
     //find all orders
     @Operation(summary = "Find all orders")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Orders found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))
-            }),
-    })
+        @ApiResponse(responseCode = "200", description = "Orders found", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))
+        }),})
     @GetMapping
     public ResponseEntity<List<Order>> findAll() {
         return new ResponseEntity<>(orderService.findAllOrders(), HttpStatus.OK);
     }
-    
-    
+
 }
